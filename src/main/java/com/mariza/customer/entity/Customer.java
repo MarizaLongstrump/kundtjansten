@@ -25,6 +25,16 @@ public class Customer {
 
     @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String city;
+
     // Konto-audit
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

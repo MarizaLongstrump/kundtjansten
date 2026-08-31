@@ -1,4 +1,4 @@
-package com.mariza.customer.controller.web;
+package com.mariza.customer.controller.api;
 
 import com.mariza.customer.dto.CreateCustomerRequest;
 import com.mariza.customer.dto.CustomerResponse;

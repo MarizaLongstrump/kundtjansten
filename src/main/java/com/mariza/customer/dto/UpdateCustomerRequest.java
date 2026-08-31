@@ -4,12 +4,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class UpdateCustomerRequest {
 
-    private String firstName;
-    private String lastName;
-    private String phone;
+    private String phoneNumber;
+    private String address;
+    private String city;
+
 }

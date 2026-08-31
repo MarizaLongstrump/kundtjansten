@@ -14,6 +14,9 @@ import com.mariza.customer.dto.CustomerResponse;
 import com.mariza.customer.entity.Customer;
 import com.mariza.customer.exceptions.ResourceNotFoundException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -58,4 +61,13 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
                 .orElseThrow(()->new ResourceNotFoundException("Customer not found"));
         customerRepository.delete(customer);
 }
+
+    @Override
+    public List<CustomerResponse> getAllCustomers() {
+        return customerRepository.findAll()
+                .stream()
+                .map(customerMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
 }
