@@ -53,10 +53,34 @@ public class CustomerWebController {
         return "redirect:/customers";
     }
 
-    @PostMapping("/{id}/delete")
+   /* @PostMapping("/{id}/delete")
     public String deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return "redirect:/customers";
+    }*/
+
+    @PostMapping("/{id}/delete")
+    public String deleteCustomer(@PathVariable Long id, Model model) {
+        try {
+            customerService.deleteCustomer(id);
+            return "redirect:/customers";
+
+        } catch (RuntimeException ex) {
+
+            if (ex.getMessage().contains("active bookings")) {
+                model.addAttribute("errorMessage", "Kunden har aktiva bokningar och kan inte tas bort.");
+                return "customers/view";
+            }
+
+            if (ex.getMessage().contains("unavailable")) {
+                model.addAttribute("errorMessage", "Bokningstjänsten är nere. Försök igen senare.");
+                return "customers/view";
+            }
+
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "customers/view";
+        }
     }
+
 }
 
