@@ -3,6 +3,7 @@ package com.mariza.customer.service;
 import com.mariza.customer.dto.BookingResponse;
 import com.mariza.customer.exceptions.ResourceNotFoundException;
 import com.mariza.customer.repository.CustomerRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import com.mariza.customer.dto.UpdateCustomerRequest;
 import com.mariza.customer.dto.CustomerResponse;
 import com.mariza.customer.entity.Customer;
 import com.mariza.customer.exceptions.ResourceNotFoundException;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -81,28 +83,36 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
         // 2. REST-anrop till bokningstjänsten
-        String url = "http://booking_service:8080/booking/customer/" + id;
+        String url = "http://booking-service:8080/booking/customer/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
-
+        BookingResponse[] bookings;
         try {
-            ResponseEntity<BookingResponse[]> response =
-                    restTemplate.getForEntity(url, BookingResponse[].class);
-
-            BookingResponse[] bookings = response.getBody();
-
-            // Om kunden har bokningar → stoppa deletion
-            if (bookings != null && bookings.length > 0) {
-                throw new RuntimeException("Customer has active bookings");
-            }
-
+            ResponseEntity<BookingResponse[]> response = restTemplate.getForEntity(url, BookingResponse[].class);
+            bookings = response.getBody();
         } catch (Exception ex) {
-            // Bokningstjänsten är nere
-            throw new RuntimeException("Booking service unavailable");
+            throw new RuntimeException("Booking service unavailable. Details: " + ex.getMessage());
         }
 
-        // 3. Ta bort kunden
+        if (bookings != null && bookings.length > 0) {
+            throw new HttpClientErrorException(HttpStatus.CONFLICT, "Customer has active bookings");
+        }
+
         customerRepository.delete(customer);
     }
+
+    @Override
+    public Customer login(String email, String password) {
+
+        Customer customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Email not found"));
+
+        if (!customer.getPasswordHash().equals(password)) {
+            throw new IllegalArgumentException("Wrong password");
+        }
+
+        return customer;
+    }
+
 
 }

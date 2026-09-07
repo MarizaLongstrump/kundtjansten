@@ -5,7 +5,10 @@ import com.mariza.customer.dto.CustomerResponse;
 import com.mariza.customer.dto.UpdateCustomerRequest;
 import com.mariza.customer.service.CustomerServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -34,7 +37,15 @@ public class CustomerController {
 
     // delete
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id){
-        customerService.deleteCustomer(id);
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id){
+        try {
+            customerService.deleteCustomer(id);
+        }
+        catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode() == HttpStatus.CONFLICT) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+            }
+        }
+        return null;
     }
 }
