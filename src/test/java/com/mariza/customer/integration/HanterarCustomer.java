@@ -76,8 +76,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @BeforeEach
     void resetDatabase() {
-        jdbcTemplate.execute("truncate table customer"); // truncate ta bort rad och
-        // återställa auto increment
+        jdbcTemplate.execute("truncate table customer"); // truncate ta bort rad och fungerar när finns auto increment
+                                                             // och man vill radera allt och börja om på 1
     }
     }
 
