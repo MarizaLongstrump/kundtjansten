@@ -78,11 +78,11 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
     @Override
     public void deleteCustomer(Long id) {
 
-        // 1. Kontrollera att kunden finns
+        // Kontrollera att kunden finns
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        // 2. REST-anrop till bokningstjänsten
+        // REST-anrop till bokningstjänsten
         String url = "http://booking-service:8080/booking/customer/" + id;
 
         RestTemplate restTemplate = new RestTemplate();

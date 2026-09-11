@@ -16,26 +16,26 @@ import org.springframework.web.client.HttpClientErrorException;
 public class CustomerController {
     private final CustomerServiceInterface customerService;
 
-    // Create
+
     @PostMapping
     public CustomerResponse createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest){
         return customerService.createCustomer(createCustomerRequest);
     }
 
-    // Get
+
     @GetMapping("/{id}")
     public CustomerResponse getCustomerById(@PathVariable Long id){
         return customerService.getCustomerById(id);
     }
 
-    // update
+
     @PutMapping("/{id}")
     public CustomerResponse updateCustomer(@PathVariable Long id,
                                            @RequestBody UpdateCustomerRequest updateCustomerRequest     ){
     return customerService.updateCustomer(id, updateCustomerRequest);
     }
 
-    // delete
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable Long id){
         try {
