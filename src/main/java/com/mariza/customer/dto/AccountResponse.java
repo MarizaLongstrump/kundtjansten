@@ -1,6 +1,17 @@
 package com.mariza.customer.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class AccountResponse {
     private Long id;
@@ -9,22 +20,6 @@ public class AccountResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public AccountResponse(Long id,
-                           String email,
-                           Long customerId,
-                           LocalDateTime createdAt,
-                           LocalDateTime updatedAt) {
-        this.id = id;
-        this.email = email;
-        this.customerId = customerId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 
-    public Long getId() { return id; }
-    public String getEmail() { return email; }
-    public Long getCustomerId() { return customerId; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
 
 }
