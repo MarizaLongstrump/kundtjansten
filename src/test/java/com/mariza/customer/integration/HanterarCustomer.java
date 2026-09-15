@@ -18,7 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.mysql.MySQLContainer;
+import org.testcontainers.containers.MySQLContainer;
 
 import java.nio.charset.StandardCharsets;
 
@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     private JdbcTemplate jdbcTemplate;
 
     @Container
-    static MySQLContainer mySQLContainer=
+    static MySQLContainer<?> mySQLContainer=
             new MySQLContainer("mysql:8.0.36")
             .withDatabaseName("bookingTest")
             .withUsername("test")
