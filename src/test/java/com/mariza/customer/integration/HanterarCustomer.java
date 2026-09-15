@@ -43,12 +43,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     @Container
     static MySQLContainer<?> mySQLContainer=
-            new MySQLContainer("mysql:8.0.36")
+            new MySQLContainer<>("mysql:8.0.36")
             .withDatabaseName("bookingTest")
             .withUsername("test")
             .withPassword("secret");
     @DynamicPropertySource
-    static void dynamicProperties(DynamicPropertyRegistry registry) {
+    static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", mySQLContainer::getUsername);
         registry.add("spring.datasource.password", mySQLContainer::getPassword);
