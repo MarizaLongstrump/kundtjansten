@@ -12,14 +12,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.mysql.MySQLContainer;
+
 import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Testcontainers
 @SpringBootTest
 //@Transactional
 @TestPropertySource(properties = "spring.datasource.url=jdbc:mysql://localhost:3306/kundjanstentest")
@@ -33,6 +40,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     private CustomerRepository customerRepository;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Container
+    static MySQLContainer mySQLContainer=
+            new MySQLContainer("mysql:8.0.36      ")
+            .withDatabaseName("bookingTest")
+            .withUsername("test")
+            .withPassword("secret");
+    @DynamicPropertySource
+    static void dynamicProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", mySQLContainer::getUsername);
+        registry.add("spring.datasource.password", mySQLContainer::getPassword);
+
+    }
 
     @Test
     void postTest() throws Exception {

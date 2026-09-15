@@ -52,9 +52,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator' // ✅ lägg till denna rad
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.springframework.boot:spring-boot-webmvc-test'
+    testImplementation 'org.testcontainers:testcontainers-mysql:2.0.5'
+    testImplementation 'org.testcontainers:junit-jupiter:1.21.3'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 
 }
 
