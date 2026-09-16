@@ -20,6 +20,4 @@ public class AccountResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-
-
 }

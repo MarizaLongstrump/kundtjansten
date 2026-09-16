@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomerServiceImplementation implements CustomerServiceInterface{
 
-
         private final CustomerMapper customerMapper;
         private final CustomerRepository customerRepository;
 
@@ -37,35 +36,28 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(createCustomerRequest.getPassword());
 
-    Customer customer = customerMapper.toEntity(createCustomerRequest);
-    customer.setPasswordHash(hashedPassword);
+        Customer customer = customerMapper.toEntity(createCustomerRequest);
+        customer.setPasswordHash(hashedPassword);
 
-    Customer savedCustomer = customerRepository.save(customer);
-    return customerMapper.toResponse(savedCustomer);
-}
+        Customer savedCustomer = customerRepository.save(customer);
+        return customerMapper.toResponse(savedCustomer);
+    }
 
-@Override
+    @Override
     public CustomerResponse getCustomerById(Long id) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Customer not found"));
         return customerMapper.toResponse(customer);
-}
+    }
 
-@Override
+    @Override
     public CustomerResponse updateCustomer(Long id, UpdateCustomerRequest updateCustomerRequest) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Customer not found"));
         customerMapper.updateEntityFromDto(updateCustomerRequest, customer);
         Customer updatedCustomer = customerRepository.save(customer);
         return customerMapper.toResponse(updatedCustomer);
-}
-/*
-@Override
-    public void deleteCustomer(Long id){
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Customer not found"));
-        customerRepository.delete(customer);
-}*/
+    }
 
     @Override
     public List<CustomerResponse> getAllCustomers() {
@@ -78,11 +70,9 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
     @Override
     public void deleteCustomer(Long id) {
 
-        // Kontrollera att kunden finns
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        // REST-anrop till bokningstjänsten
         String url = "http://booking-service:8080/booking/customer/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
@@ -113,6 +103,5 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
 
         return customer;
     }
-
 
 }

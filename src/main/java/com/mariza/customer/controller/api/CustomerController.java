@@ -25,6 +25,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public CustomerResponse getCustomerById(@PathVariable Long id){
+
         return customerService.getCustomerById(id);
     }
 
@@ -32,9 +33,8 @@ public class CustomerController {
     @PutMapping("/{id}")
     public CustomerResponse updateCustomer(@PathVariable Long id,
                                            @RequestBody UpdateCustomerRequest updateCustomerRequest     ){
-    return customerService.updateCustomer(id, updateCustomerRequest);
+        return customerService.updateCustomer(id, updateCustomerRequest);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable Long id){

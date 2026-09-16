@@ -14,7 +14,6 @@ public class CustomerLoginService {
 
     private final CustomerRepository customerRepository;
 
-
     public AccountResponse login(String email, String password) {
         Customer customer = customerRepository.findByEmail(email)
                 .orElse(null);
