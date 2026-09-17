@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @SpringBootTest
 //@Transactional
-@TestPropertySource(properties = "spring.datasource.url=jdbc:mysql://localhost:3306/kundjanstentest")
+//@TestPropertySource(properties = "spring.datasource.url=jdbc:mysql://localhost:3306/kundjanstentest")
 @AutoConfigureMockMvc
 
  class HanterarCustomer {

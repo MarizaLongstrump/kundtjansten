@@ -33,7 +33,7 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
         private final CustomerMapper customerMapper;
         private final CustomerRepository customerRepository;
 
-        @Value("${booking-service.url}")
+
         private String bookingServiceUrl;
 
     @Override
