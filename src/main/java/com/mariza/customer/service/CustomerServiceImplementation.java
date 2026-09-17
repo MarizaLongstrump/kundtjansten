@@ -3,6 +3,8 @@ package com.mariza.customer.service;
 import com.mariza.customer.dto.BookingResponse;
 import com.mariza.customer.exceptions.ResourceNotFoundException;
 import com.mariza.customer.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +22,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 
@@ -29,6 +32,9 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
 
         private final CustomerMapper customerMapper;
         private final CustomerRepository customerRepository;
+
+        @Value("${booking-service.url}")
+        private String bookingServiceUrl;
 
     @Override
     public CustomerResponse createCustomer(CreateCustomerRequest createCustomerRequest) {
@@ -73,7 +79,9 @@ public class CustomerServiceImplementation implements CustomerServiceInterface{
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        String url = "http://booking-service:8080/booking/customer/" + id;
+
+        String url = bookingServiceUrl + "/booking/customer/" + id;
+        //String url = "http://booking-service:8080/booking/customer/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
         BookingResponse[] bookings;
