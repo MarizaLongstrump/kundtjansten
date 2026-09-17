@@ -6,6 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      CUSTOMER_SERVICE: http://customer-service:8081
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
