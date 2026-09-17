@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CUSTOMER_SERVICE: http://customer-service:8081
+      BOOKING_SERVICE: http://customer-service:8081
 
     steps:
       - name: Checkout code
