@@ -1,6 +1,7 @@
 
 package com.mariza.customer;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.health.contributor.Health;
 import org.springframework.boot.health.contributor.HealthIndicator;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 public class BookingServiceHealthIndicator implements HealthIndicator {
 
     private final RestTemplate restTemplate;
+    @Value("${booking-service.url}")
+    private String url;
 
     public BookingServiceHealthIndicator(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -23,7 +26,7 @@ public class BookingServiceHealthIndicator implements HealthIndicator {
 
             ResponseEntity<String> response =
                     restTemplate.getForEntity(
-                            "http://localhost:8080/actuator/health",
+                            url+"/actuator/health",
                             String.class
                     );
 
