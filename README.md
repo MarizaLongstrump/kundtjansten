@@ -16,3 +16,9 @@ Klicka på: Merge pull request.
 Man får ett commit meddelande.   
 Man kan skriva ett meddelande i extended description: typ vad man valde för lösning för problem.  
 Klicka på: confirm merge.  
+Men kod ska inte bli automatisk förändrade i mitt lokalt gitrepository.   
+Det betyder att om man går tillbaka i sin lokal program ska man se att kod är oförändrade där.  
+Senare när kod  blir godkänd i github ska man går till sin dator och gör så här.  
+Byta till maste branch.  
+Klicka på update projekt för att hämta förändringar till gitrepository.   
+
