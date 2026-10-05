@@ -1,4 +1,4 @@
-Hur konflikt med portnummer har löst.  
+1.Hur konflikt med portnummer har löst.  
 
 När två eller flera personer gör en förändring i samma fil och i samma rad.  
 Om förändring skilja sig från varandra.  
@@ -21,4 +21,21 @@ Det betyder att om man går tillbaka i sin lokal program ska man se att kod är 
 Senare när kod  blir godkänd i github ska man går till sin dator och gör så här.  
 Byta till maste branch.  
 Klicka på update projekt för att hämta förändringar till gitrepository.   
+
+2. Hela flöde
+3. Jag arbetar i till exempel i kundtjänsten
+4. Skapar en branch som heter feature-logging.
+5. Skriver kod som behövs för att logging fungerar.
+6. Testar
+7. Commit
+8. Skapar PR
+9. PR aproved
+10. Merge till main
+11. CI körs
+12. CD körs
+13. Allt blir deployade i staging
+14. Testar deployade i teste mijlö
+15. Godkände
+16. Sync till production
+17. Kund kan använda. 
 
